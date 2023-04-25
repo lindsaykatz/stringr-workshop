@@ -16,17 +16,17 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Background and Overview
 
-In programming, a string is any value written in single or double quotes, like "stat 101", 'doss' or "2023". The string data type exists to capture text data, as opposed to numeric data which we are most often used to working with in statistics. 
+In programming, a string is any value written in single or double quotes, like "stat 101", 'doss' or "2023". The string data type exists to capture text data, as opposed to numeric data which we are most often used to working with in statistics.
 
 In this workshop, you will learn some helpful functions primarily from the `stringr` package [@stringr], which allow you to explore and modify text data. We will also go over an introduction to regular expressions, which is a super powerful tool that allows us to detect and match patterns in text data in a generalized and efficient manner.
 
 Using a number of examples and exercises, this workshop will focus on:
 
-  1. detecting matches,
-  2. extracting matches,
-  3. string mutation, and
-  4. string-based separation
-  
+1.  detecting matches,
+2.  extracting matches,
+3.  string mutation, and
+4.  string-based separation
+
 The first three sections include introductions to `stringr` and regular expressions with examples, and the fourth section will apply some of what we've learned to a more complicated text data example.
 
 # The `stringr` package
@@ -45,15 +45,15 @@ Let's define a vector of strings to explore these functions with.
 desserts <- c("apple pie", "cheesecake", "french macarons", "brownies", "strawberry cupcakes")
 ```
 
-## Detecting matches 
+## Detecting matches
 
 ### `str_detect` - detect matches {#detect}
 
-When working with strings, we may wish to identify only the strings that contain a specific pattern of characters. The `str_detect` function allows us to do just that. 
+When working with strings, we may wish to identify only the strings that contain a specific pattern of characters. The `str_detect` function allows us to do just that.
 
-This function takes two arguments: `string` (a character vector), and `pattern` (the pattern of characters to detect). 
+This function takes two arguments: `string` (a character vector), and `pattern` (the pattern of characters to detect).
 
-Note that strings are *case sensitive* - this applies to the input vector of text data _and_ any other string patterns passed to `stringr` functions.
+Note that strings are *case sensitive* - this applies to the input vector of text data *and* any other string patterns passed to `stringr` functions.
 
 ```{r}
 # detect which strings contain "cake"
@@ -88,14 +88,14 @@ Exercise: Using `str_detect`, detect which strings in the `fruits` vector contai
 
 ### `str_count` - count the number of matches in a string
 
-We may wish to count the number of times a certain pattern or character is detected in a string. The first argument as usual is `string`, and the second argument is once again `pattern`. For example, we can use this function to get a count for the number of vowels present in each string of our character vector. Using the "or" operator, we can obtain a count of the total number of matches to _any_ of the characters specified.
+We may wish to count the number of times a certain pattern or character is detected in a string. The first argument as usual is `string`, and the second argument is once again `pattern`. For example, we can use this function to get a count for the number of vowels present in each string of our character vector. Using the "or" operator, we can obtain a count of the total number of matches to *any* of the characters specified.
 
 ```{r}
 # count number of vowels detected in each string
 str_count(desserts, "a|e|i|o|u")
 ```
 
-Note: if we hadn't used the "or" operator and just passed a _vector_ of vowels to count for, only the first one detected in each string would be counted (e.g. only "a"'s would be counted in "apple pie", because it is the first vowel detected in that string).
+Note: if we hadn't used the "or" operator and just passed a *vector* of vowels to count for, only the first one detected in each string would be counted (e.g. only "a"'s would be counted in "apple pie", because it is the first vowel detected in that string).
 
 When working with a dataset, we can use this function in combination with `mutate` to create a new variable with the resulting counts.
 
@@ -107,10 +107,10 @@ tibble(desserts) %>% mutate(n_vowels = str_count(desserts, "a|e|i|o|u"))
 Exercise: Using `str_count`, get a count for the number of letter "g"'s or "r"'s detected in each element of the `fruits` vector.
 
 ```{r}
-
+str_count(fruits, "g|r")
 ```
 
-## Extracting matches 
+## Extracting matches
 
 ### `str_extract` and `str_extract_all` - extract matches
 
@@ -191,7 +191,7 @@ Exercise: Using `str_replace`, replace the first vowel detected in each string f
 
 ### `str_to_upper`, `str_to_lower`, and `str_to_title` - convert the case of strings
 
-These functions take up to 2 arguments - the input vector (required), and a locale which is a language expectation where the default is English. 
+These functions take up to 2 arguments - the input vector (required), and a locale which is a language expectation where the default is English.
 
 We can convert entire strings to upper case...
 
@@ -220,7 +220,7 @@ Exercise: Using `str_to_upper`, convert each string in `fruits` to upper case.
 
 ```
 
-### `str_remove` and  `str_remove_all` - remove characters from a string
+### `str_remove` and `str_remove_all` - remove characters from a string
 
 These functions allow you to remove characters from a string or vector of strings.
 
@@ -256,10 +256,10 @@ When working with messy text data, you may find unwanted whitespace (i.e. tabs, 
 str_squish("  hello   world!       ")
 ```
 
-Exercise: Using `str_squish` and `str_to_title`, remove excess whitespace from the following string: "   Department       OF statiSTical   sciences ", and convert it to title case.
+Exercise: Using `str_squish` and `str_to_title`, remove excess whitespace from the following string: " Department OF statiSTical sciences ", and convert it to title case.
 
 ```{r}
-
+str_trim(" Department OF statiSTical sciences ", side="left")
 ```
 
 ### `str_split` - split strings into sub-strings
@@ -278,9 +278,9 @@ Exercise: Using `str_split`, split all strings in `fruits` into sub-strings wher
 
 # What are regular expressions?
 
-Regular expressions (regex) are a concise language designed to allow us to search for patterns within strings. These are sequences of characters used to search text for precise matches. Creating a regular expression allows us to check that the string conforms to the specific pattern we have designed. 
+Regular expressions (regex) are a concise language designed to allow us to search for patterns within strings. These are sequences of characters used to search text for precise matches. Creating a regular expression allows us to check that the string conforms to the specific pattern we have designed.
 
-For example, if you are subscribing to a newsletter, the website will prompt you to enter a valid email address. If your input doesn’t match the expected regular expression pattern associated with an email address (e.g. have an '@' symbol and end with '.com', '.ca', '.org', etc.), that website will throw an error. 
+For example, if you are subscribing to a newsletter, the website will prompt you to enter a valid email address. If your input doesn't match the expected regular expression pattern associated with an email address (e.g. have an '\@' symbol and end with '.com', '.ca', '.org', etc.), that website will throw an error.
 
 When you use functions from the `stringr` package and provide a pattern argument as we have done in the previous examples, this pattern is itself a regular expression. Thus, understanding the proper syntax for regular expressions is crucial when it comes to more complicated pattern matching.
 
@@ -288,32 +288,31 @@ When you use functions from the `stringr` package and provide a pattern argument
 
 Below is a list of some common character classes (those in square brackets) and match characters. The backslashes are written to denote special characters, because as you'll see later on, many commonly used punctuation characters like periods, parentheses and question marks have special meanings in the context of regular expressions. The technical term for this backslash use is to "escape" special characters.
 
-- `[:alpha:]` - letters
-- `[:lower:]` - lowercase letters
-- `[:upper:]` - uppercase letters
-- `[:alnum:]` - numbers and letters
-- `[:space:]` - space characters
-- `[:blank:]` - space and tab, but not a newline
-- `[:digit:]` - digits
-- `[:punct:]` - punctuation
-    - This includes: periods, commas, colons, slashes, exclamation and question marks, parentheses, quotation marks and more
-- `\\.` - period
-- `\\!` - exclamation mark
-- `\\?` - question mark
--` \\\\` - backslash
-- `\\(` and `\\)` - parentheses
-- `\\n` - newline
-- `\\d` - digit
-- `\\s` - space
-- `\\t` - tab
-- `.` - matches every character except a newline
-    - this special meaning of a period is a prime example of why we need to escape it using backslashes when we want to match for one in a string
+-   `[:alpha:]` - letters
+-   `[:lower:]` - lowercase letters
+-   `[:upper:]` - uppercase letters
+-   `[:alnum:]` - numbers and letters
+-   `[:space:]` - space characters
+-   `[:blank:]` - space and tab, but not a newline
+-   `[:digit:]` - digits
+-   `[:punct:]` - punctuation
+    -   This includes: periods, commas, colons, slashes, exclamation and question marks, parentheses, quotation marks and more
+-   `\\.` - period
+-   `\\!` - exclamation mark
+-   `\\?` - question mark -`\\\\` - backslash
+-   `\\(` and `\\)` - parentheses
+-   `\\n` - newline
+-   `\\d` - digit
+-   `\\s` - space
+-   `\\t` - tab
+-   `.` - matches every character except a newline
+    -   this special meaning of a period is a prime example of why we need to escape it using backslashes when we want to match for one in a string
 
 Note that in base R, many functions require classes to be written with two sets of square brackets like "`[[:alpha:]]`" [@stringr].
 
 ## Anchors
 
-By default, regular expression patterns will detect a match in any part of the string. In some cases, you may wish to "anchor" the regular expression to specify the match to be detected from the start or end of the string. 
+By default, regular expression patterns will detect a match in any part of the string. In some cases, you may wish to "anchor" the regular expression to specify the match to be detected from the start or end of the string.
 
 To anchor the regular expression so it searches for a match at the start of the string, use a `^` character before the pattern to be matched. To anchor to match the end of the string, use a `$` character at the end of the pattern to be matched. You can use both anchors if you want to force a regular expression to match only a complete string which matches the specified pattern.
 
@@ -323,13 +322,13 @@ For example, consider the string "doss". If we want to extract the last letter o
 
 Sometimes we want to match for a repeated character or character class in a string, such as three consecutive digits. Adding quantifiers to regular expressions allows us to do so. Here are a few examples of quantifiers that we will use later on, however there are others you can read about [here](https://www.regular-expressions.info/refrepeat.html).
 
-  1. `x{m}` - exactly m
-  2. `x{m,n}` - between m and n
-  3. `x{m,}` - at least m (i.e. m or more)
-  4. `x+` - one or more
-  
+1.  `x{m}` - exactly m
+2.  `x{m,n}` - between m and n
+3.  `x{m,}` - at least m (i.e. m or more)
+4.  `x+` - one or more
+
 For instance, if we are given a string containing a phone number "416-978-2190" and want to match the set of four digits in a row, we would use the regular expression "`\\d{4}`", or equivalently, "`[:digit:]{4}`".
-  
+
 ## Lookarounds
 
 The last component of regular expressions we will cover is lookarounds. These allow you to improve the precision of matches by specifying what should or should not come before or after a pattern. There are two types of lookarounds: lookaheads (what follows a pattern) and lookbehinds (what precedes a pattern). Lookarounds can be positive or negative.
@@ -377,7 +376,11 @@ str_detect(desserts, "e$|es$")
 Exercise: Using `str_detect` with an anchor and positive lookahead, detect the strings in `fruits` which start with the pattern "gr" which is followed by a letter "a".
 
 ```{r}
+fruits
+```
 
+```{r}
+str_extract(fruits, "^gr(?=a)")
 ```
 
 ## `str_extract`
@@ -405,21 +408,21 @@ Now, what happens if we don't use the anchor?
 str_extract(desserts, "[:alpha:]+")
 ```
 
-As you can see, for those strings with two words, the specified pattern extracts the _first_ match of one or more letters which is of course detected in the first word. The anchor to the end of the string is what tells the function to look for the match in the final word of that string.
+As you can see, for those strings with two words, the specified pattern extracts the *first* match of one or more letters which is of course detected in the first word. The anchor to the end of the string is what tells the function to look for the match in the final word of that string.
 
-Exercise: Using `str_extract`, extract strings from `fruits` which are composed _only_ of between 4 and 8 letters. Hint: use anchors.
+Exercise: Using `str_extract`, extract strings from `fruits` which are composed *only* of between 4 and 8 letters. Hint: use anchors.
 
 ```{r}
-
+str_extract(fruits, "^[:alpha:]{4,8}$")
 ```
 
 # Parliamentary Debates Example
 
-In this section we are going to put what we have learned into practice with a more complicated data example. 
+In this section we are going to put what we have learned into practice with a more complicated data example.
 
-The data we will be working with is based on a research project I have been working on with Dr. Rohan Alexander, where we have developed scripts to build a database containing 24 years of proceedings of the Australian Parliamentary debates. 
+The data we will be working with is based on a research project I have been working on with Dr. Rohan Alexander, where we have developed scripts to build a database containing 24 years of proceedings of the Australian Parliamentary debates.
 
-These parliamentary debate records are essentially verbatim transcripts of everything said in parliament that day, making them a really valuable source for text analysis purposes, which is why we have worked to create this accessible database which is ready to be analyzed. The official name for these records is "Hansard". 
+These parliamentary debate records are essentially verbatim transcripts of everything said in parliament that day, making them a really valuable source for text analysis purposes, which is why we have worked to create this accessible database which is ready to be analyzed. The official name for these records is "Hansard".
 
 As you will see in the data, there is one row for each unique debate that took place in parliament that day, with a number of columns including specific details on the Member of Parliament (MP) whose turn it was to speak (i.e. the MP who initiated each debate), such as their political party and full name.
 
@@ -435,18 +438,18 @@ hansard <- read_csv("../data/hansard_ex.csv", show_col_types = F)
 hansard
 ```
 
-The "body" variable is what contains the text associated with each speech. 
+The "body" variable is what contains the text associated with each speech.
 
 ```{r}
 # just look at body variable
 hansard %>% select(body)
 ```
 
-You might have noticed some elements of the data that could be cleaned up. For example, the `time.stamp` variable is missing for every row, and in each `body` cell, there is additional information on the MP speaking preceding the actual spoken content, which should be removed from this column. 
+You might have noticed some elements of the data that could be cleaned up. For example, the `time.stamp` variable is missing for every row, and in each `body` cell, there is additional information on the MP speaking preceding the actual spoken content, which should be removed from this column.
 
 Before we start cleaning the `body` variable (which is the most complex and messy), let's run through a couple simpler exercises.
 
-First, let's split the `name` column into two columns: one with the MPs first name, and one with their surname. 
+First, let's split the `name` column into two columns: one with the MPs first name, and one with their surname.
 
 ```{r}
 # split first and last name
@@ -474,20 +477,23 @@ hansard <- hansard %>% mutate(time.stamp = str_extract(body, "\\d{2}:\\d{2}"))
 select(hansard, time.stamp)
 ```
 
-Exercises: 
+Exercises:
 
-  1. Using `str_count`, create a column of the count of digits found in each `name.id`.
-  2. Create new variables containing the first and last initial for each MP. (Hint: use a positive lookbehind to extract the first initial)
-  
+1.  Using `str_count`, create a column of the count of digits found in each `name.id`.
+2.  Create new variables containing the first and last initial for each MP. (Hint: use a positive lookbehind to extract the first initial)
+
 ```{r}
-
+hansard %>% mutate(n_digits = str_count(name.id, "\\d")) %>% 
+  select(name.id, n_digits)
 ```
 
 ```{r}
-
+hansard %>% mutate(last_initial = str_sub(name, end=1),
+                   first_initial = str_extract(name, "(?<=, )[:upper:]")) %>% 
+  select(name, last_initial, first_initial)
 ```
 
-Now for a more complicated task, let's look more closely at the `body` variable. For this task we are just going to work with the `body` associated with the last row in our dataframe. 
+Now for a more complicated task, let's look more closely at the `body` variable. For this task we are just going to work with the `body` associated with the last row in our dataframe.
 
 ```{r, eval=F, echo=F}
 # not using this for the workshop but this is how you pull the last row's body cell 
@@ -501,21 +507,21 @@ last_speech <- hansard %>% slice(n())
 
 Here is the entire contents of that cell:
 
-"**Mr FLETCHER (Bradfield—Minister for Communications, Urban Infrastructure, Cities and the Arts) (14:55):**  I thank the Prime Minister for the opportunity to respond to the question asked by the member for Sydney. Our model will deal with allegations of serious criminal corruption at the Commonwealth level. That is what our model will do. It's a well-developed, serious, substantiated model, and if the opposition were serious about engaging in it—*Ms Kearney interjecting—***The SPEAKER:**  The member for Cooper is warned.**Mr FLETCHER:**  if the opposition were serious about tackling the risk and challenge of—*Mr Perrett interjecting—***Mr FLETCHER:**  suspected serious criminal corruption at the Commonwealth level—**The SPEAKER:**  The member for Moreton is warned.**Mr FLETCHER:**  they would engage seriously with this government on what we've put, on the full text, the 349 pages of legislation which have been out there for many months, rather than engage in a series of political stunts. One side of this House is genuine and serious minded about engaging on the issue of suspected Commonwealth criminal corruption. One side of this House has a detailed exposure draft of legislation which is out there, ready to go. The other side of this House is sitting on its hands doing nothing. Those opposite need to take a good hard look at themselves."
+"**Mr FLETCHER (Bradfield---Minister for Communications, Urban Infrastructure, Cities and the Arts) (14:55):** I thank the Prime Minister for the opportunity to respond to the question asked by the member for Sydney. Our model will deal with allegations of serious criminal corruption at the Commonwealth level. That is what our model will do. It's a well-developed, serious, substantiated model, and if the opposition were serious about engaging in it---*Ms Kearney interjecting---***The SPEAKER:** The member for Cooper is warned.**Mr FLETCHER:** if the opposition were serious about tackling the risk and challenge of---*Mr Perrett interjecting---***Mr FLETCHER:** suspected serious criminal corruption at the Commonwealth level---**The SPEAKER:** The member for Moreton is warned.**Mr FLETCHER:** they would engage seriously with this government on what we've put, on the full text, the 349 pages of legislation which have been out there for many months, rather than engage in a series of political stunts. One side of this House is genuine and serious minded about engaging on the issue of suspected Commonwealth criminal corruption. One side of this House has a detailed exposure draft of legislation which is out there, ready to go. The other side of this House is sitting on its hands doing nothing. Those opposite need to take a good hard look at themselves."
 
 As you can see from the bolded text, this body content contains statements made by a number of MPs, not just Mr Fletcher (the MP whose turn it was to speak). To improve the quality of our dataset, we would like to separate each individual statement onto its own row. This is exactly what Dr. Alexander and I did in the making of our database - and I am going to show you how for this one example.
 
 For clarity, here is a list of the unique strings on which we want to separate this body of text:
 
-  - "Ms Kearney interjecting—"
-  - "Mr Perrett interjecting—"
-  - "Mr FLETCHER:"
-  - "The SPEAKER:"
+-   "Ms Kearney interjecting---"
+-   "Mr Perrett interjecting---"
+-   "Mr FLETCHER:"
+-   "The SPEAKER:"
 
 Notice that there are two general forms here:
 
-  1. a title (Mr/Ms/The) + a surname + a colon
-  2. a title (Mr/Ms/The) + a surname + "interjecting" followed by an emdash 
+1.  a title (Mr/Ms/The) + a surname + a colon
+2.  a title (Mr/Ms/The) + a surname + "interjecting" followed by an emdash
 
 We can capture and extract these patterns using what we learned about regular expressions.
 
@@ -530,7 +536,7 @@ to_separate <- str_extract_all(last_speech$body, "[:upper:][:lower:]{1,2} [:alph
 to_separate
 ```
 
-Now that we have a list of phrases we want to separate the text on, we can do so easily with `separate_rows`. You'll notice that each element of the list is pasted within the positive lookahead syntax. If we don't do this, we lose the text we split on. We want to keep this text because it contains valuable information on who is making each statement, which we can later use. (Optional exercise: remove the "`(=`" and "`)`" elements from the code below to see the difference.)
+Now that we have a list of phrases we want to separate the text on, we can do so easily with `separate_rows`. You'll notice that each element of the list is pasted within the positive lookahead syntax. If we don't do this, we lose the text we split on. We want to keep this text because it contains valuable information on who is making each statement, which we can later use. (Optional exercise: remove the "`(?=`" and "`)`" elements from the code below to see the difference.)
 
 ```{r}
 # separate rows on character vector
@@ -553,29 +559,29 @@ last_speech %>% mutate(electorate = ifelse(str_detect(body, "^Mr FLETCHER"),
 
 Exercises:
 
-  1. Add a flag variable called `interject` that takes on a value 1 if the body of text ends in the pattern "interjecting—", and 0 otherwise.
-  2. For those rows where `interject==0`, remove the name pattern preceding the body of text (i.e. everything from the beginning of the string up to and including the colon).
+1.  Add a flag variable called `interject` that takes on a value 1 if the body of text ends in the pattern "interjecting---", and 0 otherwise.
+2.  For those rows where `interject==0`, remove the name pattern preceding the body of text (i.e. everything from the beginning of the string up to and including the colon).
 
 ```{r}
-
+last_speech <- last_speech %>% mutate(interject = ifelse(str_detect(body, "interjecting—"),
+                                          1,0))
 ```
 
 ```{r}
-
+last_speech %>% mutate(body = ifelse(interject==0, str_remove(body, "^.+:"), body))
 ```
 
 ## More on `stringr`
 
-- Use `str_order` or `str_sort` to order a character vector based on some specified locale (i.e. language) - the default is English.
-    - `str_order` returns a vector of ordered indices, while `str_sort` returns a sorted character vector.
-- Strings can be combined using the `str_c` function.
-    - The first arguments must be the character vectors of strings you wish to combine.
-    - Use the `sep` argument to specify a character to be inserted between input vectors. 
-    - Alternatively, use the `collapse` argument to specify a character which will be used to combine input vectors into single string.
-- `str_trim` is useful for cleaning up a string's outer whitespace
-    - The first argument is the input.
-    - The second is `side` (which side to trim whitespace from). This can be either `both`, `left`, or `right`.
-- For more information, check out this really useful `stringr` [cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
+-   Use `str_order` or `str_sort` to order a character vector based on some specified locale (i.e. language) - the default is English.
+    -   `str_order` returns a vector of ordered indices, while `str_sort` returns a sorted character vector.
+-   Strings can be combined using the `str_c` function.
+    -   The first arguments must be the character vectors of strings you wish to combine.
+    -   Use the `sep` argument to specify a character to be inserted between input vectors.
+    -   Alternatively, use the `collapse` argument to specify a character which will be used to combine input vectors into single string.
+-   `str_trim` is useful for cleaning up a string's outer whitespace
+    -   The first argument is the input.
+    -   The second is `side` (which side to trim whitespace from). This can be either `both`, `left`, or `right`.
+-   For more information, check out this really useful `stringr` [cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
 
 ## References
-

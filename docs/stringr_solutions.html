@@ -352,7 +352,7 @@ display: none;
 <h1 class="title toc-ignore">Intro to strings workshop - exercise
 solutions</h1>
 <h4 class="author">Lindsay Katz</h4>
-<h4 class="date">23 April, 2023</h4>
+<h4 class="date">24 April, 2023</h4>
 
 </div>
 
@@ -372,9 +372,8 @@ letter “r”’s or “g”’s detected in each element of the
 <pre class="r"><code>str_count(fruits, &quot;r|g&quot;)</code></pre>
 <pre><code>## [1] 2 4 2 1 1</code></pre>
 <p>Exercise: Using <code>str_extract_all</code>, extract all occurrences
-of the pattern “gr” from the <code>fruits</code> input vector, and
-display the result as a character matrix.</p>
-<pre class="r"><code>str_extract_all(fruits, &quot;gr&quot;, simplify = TRUE)</code></pre>
+of the pattern “gr” from the <code>fruits</code> input vector.</p>
+<pre class="r"><code>str_extract_all(fruits, &quot;gr&quot;, simplify = T)</code></pre>
 <pre><code>##      [,1] [,2]
 ## [1,] &quot;&quot;   &quot;&quot;  
 ## [2,] &quot;gr&quot; &quot;gr&quot;
@@ -409,21 +408,13 @@ case.</p>
 <pre><code>## [1] &quot;Department Of Statistical Sciences&quot;</code></pre>
 <p>Exercise: Using <code>str_split</code>, split all strings in
 <code>fruits</code> into sub-strings wherever a space exists.</p>
-<pre class="r"><code>str_split(fruits, &quot; &quot;)</code></pre>
-<pre><code>## [[1]]
-## [1] &quot;cherries&quot;
-## 
-## [[2]]
-## [1] &quot;green&quot;  &quot;grapes&quot;
-## 
-## [[3]]
-## [1] &quot;granny&quot; &quot;smith&quot;  &quot;apples&quot;
-## 
-## [[4]]
-## [1] &quot;watermelon&quot;
-## 
-## [[5]]
-## [1] &quot;pear&quot;</code></pre>
+<pre class="r"><code>str_split(fruits, &quot; &quot;, simplify = T)</code></pre>
+<pre><code>##      [,1]         [,2]     [,3]    
+## [1,] &quot;cherries&quot;   &quot;&quot;       &quot;&quot;      
+## [2,] &quot;green&quot;      &quot;grapes&quot; &quot;&quot;      
+## [3,] &quot;granny&quot;     &quot;smith&quot;  &quot;apples&quot;
+## [4,] &quot;watermelon&quot; &quot;&quot;       &quot;&quot;      
+## [5,] &quot;pear&quot;       &quot;&quot;       &quot;&quot;</code></pre>
 </div>
 <div id="using-regex-patterns-with-stringr-exercises" class="section level1">
 <h1>Using regex patterns with <code>stringr</code> exercises</h1>

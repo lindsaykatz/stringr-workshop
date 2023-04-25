@@ -1,8 +1,9 @@
 ---
 title: "Intro to strings workshop - exercise solutions"
-output: html_document
-date: "`r format(Sys.time(), '%d %B, %Y')`"
 author: "Lindsay Katz"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +36,7 @@ str_count(fruits, "r|g")
 Exercise: Using `str_extract_all`, extract all occurrences of the pattern "gr" from the `fruits` input vector.
 
 ```{r}
-str_extract_all(fruits, "gr")
+str_extract_all(fruits, "gr", simplify = T)
 ```
 
 Exercise: Using `str_sub`, extract the first 4 characters of each string from `fruits` .
@@ -71,7 +72,7 @@ str_squish(str_to_title("   Department       OF statiSTical   sciences "))
 Exercise: Using `str_split`, split all strings in `fruits` into sub-strings wherever a space exists.
 
 ```{r}
-str_split(fruits, " ")
+str_split(fruits, " ", simplify = T)
 ```
 
 # Using regex patterns with `stringr` exercises
